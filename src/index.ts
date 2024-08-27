@@ -6,15 +6,18 @@ app.use(express.json());
 db();
 import { activateSales } from './controller/activeSales';
 import { deactivateSales } from './controller/deactiveSales';
+import { activateDiscounts } from './controller/activeDiscount';
+import { deactivateDiscounts } from './controller/desctivatediscount';
 
 // Schedule a task to run every minute
 cron.schedule('* * * * *', async () => {
   await activateSales();
-  console.log('Sales activation checked by cron job');
+  await activateDiscounts();
+  await deactivateSales();
+  await deactivateDiscounts();
 });
 
 cron.schedule('* * * * *', async () => {
-  await deactivateSales();
   console.log('Sales deactivation checked by cron job');
 });
 const PORT = 3355;
