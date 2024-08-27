@@ -1,10 +1,9 @@
-import { Request, Response } from 'express';
 import { Sales } from '../model/sales'; // Import your Sales model
 import { Product } from '../model/product'; // Import your Product model
 import { BundleProduct } from '../model/bundle';
 
 // Function to activate sales and apply discounts
-export const activateSales = async (req: Request, res: Response) => {
+export const activateSales = async () => {
   try {
     const currentDate = new Date();
     const sales = await Sales.find({
@@ -37,10 +36,8 @@ export const activateSales = async (req: Request, res: Response) => {
       await sale.save();
     }
 
-    res
-      .status(200)
-      .json({ message: 'Sales activated and discounts applied successfully' });
+    console.log('Sales activated and discounts applied successfully');
   } catch (error) {
-    res.status(500).json({ message: 'Error activating sales', error });
+    console.error('Error activating sales', error);
   }
 };
